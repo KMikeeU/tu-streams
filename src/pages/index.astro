@@ -1,0 +1,55 @@
+---
+import NavBar from '../components/NavBar.astro';
+import Layout from '../layouts/Layout.astro';
+
+import 'video.js/dist/video-js.css';
+
+import streams from '../data/streams.json';
+
+import fallBackThumbnail from '../assets/thumbnail.png'
+---
+
+<Layout title="TU Streams">
+	<NavBar />
+	<main class="px-4 md:px-16 lg:px-32 xl:px-[17.5%]">
+		<div class="py-12">
+			<h1 class="text-3xl">Alle Streams</h1>
+			<h2>Hier siehst du <span class="text-primary">alle Streams</span></h2>
+		</div>
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			{
+				Object.entries(streams).map( ([name, stream]: [string, string]) => (
+					<a href={stream} class="relative transition-all border-4 border-primary custom-border aspect-[16/9]">
+
+						<picture>
+							<source srcset={`https://tu-streams.xn--k-0fa.se/thumbnails/${stream}.jpg?ts=${new Date().getTime()}`}>
+							<img class="absolute w-full h-full top-0 left-0" srcset={fallBackThumbnail.src} alt={`Aktueller Screenshot des Hörsaals ${name}`} transition:name={`video-${stream}`}>
+						</picture>
+
+
+						<div class="absolute w-full h-full bottom-0 left-0 bg-black opacity-30 dark:opacity-40"></div>
+						<h2 class="absolute bottom-2 left-2 line-clamp-1 text-ellipsis text-white" transition:name={`title-${stream}`}>{name}</h2>
+
+					</a>
+				))
+
+			}
+		</div>
+	</main>
+</Layout>
+
+<style>
+.custom-border {
+	clip-path: polygon( 
+    calc(0% + 5px) calc(0% + 5px), /* top left */
+    calc(100% - 5px) calc(0% + 5px), /* top right */
+    calc(100% - 5px) calc(100% - 5px), /* bottom right */
+    calc(0% + 5px) calc(100% - 5px) /* bottom left */
+  );
+}
+
+.custom-border:hover {
+  /* Clip-path spanning the entire box so it's no longer hiding the full-width border. */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+</style>

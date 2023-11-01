@@ -1,0 +1,16 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1); 
+---
+
+<div class="flex bg-contrast px-8 h-14 w-full justify-between items-center" transition:persist>
+    <div class="flex items-center gap-4">
+        <a href="/" class={(currentPath === "" ? "font-bold" : "")} >TU Streams</a>
+    </div>
+    <div class="flex items-center gap-4">
+        <a href="/about" class={(currentPath === "about" ? "font-bold" : "")} >About</a>
+        <ThemeToggle />
+    </div>
+</div>

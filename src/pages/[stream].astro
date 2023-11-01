@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro";
+import streams from '../data/streams.json';
+import Layout from "../layouts/Layout.astro";
+import NavBar from "../components/NavBar.astro";
+
+import 'video.js/dist/video-js.css';
+
+export const getStaticPaths = (() => {
+    return Object.entries(streams).map(([key, value]) => {
+        return {
+            params: {
+                stream: value
+            },
+            props: {
+                name: key
+            }
+        }
+    });
+}) satisfies GetStaticPaths;
+
+const { stream } = Astro.params;
+const { name } = Astro.props;
+---
+
+
+<Layout title={name}>
+    <NavBar/>
+    <main class="px-4 md:px-16 lg:px-32 xl:px-[17.5%]">
+        <div class="my-8 py-8 px-8 outline-1 outline outline-primary bg-contrast">
+            <h1 transition:name={`title-${stream}`} class="text-3xl">{name}</h1>
+            <div class="flex">
+                <a class="text-primary font-semibold transition-all hover:pl-2" href={`https://toss.fsinf.at/?q=${name}`} target="_blank">TOSS -></a>
+            </div>
+        </div>
+        <div class="w-full aspect-[16/9] relative">
+            <video transition:name={`video-${stream}`} controls class="video-js w-full h-full absolute top-0 left-0" autoplay muted preload="metadata" data-setup="{}" width="640" height="360">
+                <source src={`https://live-cdn-1.video.tuwien.ac.at/lt-live/_definst_/${stream}/chunklist.m3u8`} type="application/x-mpegURL"/>
+            </video>
+        </div>
+    </main>
+</Layout>
+
+<style>
+
+</style>
+
+<script>
+    import _videojs from 'video.js';
+</script>
