@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "astro build && scp -r dist/* tu-streams:/var/www/tu-streams/"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.0.2",
