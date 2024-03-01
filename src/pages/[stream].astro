@@ -21,6 +21,8 @@ export const getStaticPaths = (() => {
 
 const { stream } = Astro.params;
 const { name } = Astro.props;
+
+const stream_url = `https://live-cdn-1.video.tuwien.ac.at/lt-live/_definst_/${stream}/chunklist.m3u8`;
 ---
 
 
@@ -29,13 +31,14 @@ const { name } = Astro.props;
     <main class="px-4 md:px-16 lg:px-32 xl:px-[17.5%]">
         <div class="my-8 py-8 px-8 outline-1 outline outline-primary bg-contrast">
             <h1 transition:name={`title-${stream}`} class="text-3xl">{name}</h1>
-            <div class="flex">
-                <a class="text-primary font-semibold transition-all hover:pl-2" href={`https://toss.fsinf.at/?q=${name}`} target="_blank">TOSS -></a>
+            <div class="flex gap-8 mt-2">
+                <a class="text-primary font-semibold transition-all hover:translate-x-1 cursor-pointer" href={`https://toss.fsinf.at/?q=${name}`} target="_blank">TOSS -&gt;</a>
+                <a class="text-primary font-semibold transition-all hover:translate-x-1 cursor-pointer" id="copyButton" >Copy stream URL -&gt;</a>
             </div>
         </div>
         <div class="w-full aspect-[16/9] relative">
             <video transition:name={`video-${stream}`} controls class="video-js w-full h-full absolute top-0 left-0" autoplay muted preload="metadata" data-setup="{}" width="640" height="360">
-                <source src={`https://live-cdn-1.video.tuwien.ac.at/lt-live/_definst_/${stream}/chunklist.m3u8`} type="application/x-mpegURL"/>
+                <source src={`${stream_url}`} type="application/x-mpegURL"/>
             </video>
         </div>
     </main>
@@ -45,6 +48,17 @@ const { name } = Astro.props;
 
 </style>
 
-<script>
+<script >
     import _videojs from 'video.js';
+</script>
+
+<script define:vars={{stream_url}}>
+    document.querySelector("#copyButton")?.addEventListener("click", (event) => {
+        navigator.clipboard.writeText(stream_url);
+        event.target.innerHTML = "Copied stream URL &check;";
+
+        window.setTimeout(() => {
+            event.target.innerHTML = "Copy stream URL -&gt;";
+        }, 1000);
+    });
 </script>
