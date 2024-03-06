@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && scp -r dist/* tu-streams:/var/www/tu-streams/"
+    "generate-obs": "node ./obs-source-generator.js",
+    "deploy": "astro build && npm run generate-obs && scp -r dist/* tu-streams:/var/www/tu-streams/"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.0.2",

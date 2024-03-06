@@ -2,6 +2,9 @@
 import NavBar from "../components/NavBar.astro";
 import Layout from "../layouts/Layout.astro";
 
+import step1 from "../assets/obs/step1.png";
+import step2 from "../assets/obs/step2.png";
+
 ---
 
 
@@ -10,9 +13,26 @@ import Layout from "../layouts/Layout.astro";
     <NavBar />
     <main class="py-16 px-4 md:px-16 lg:px-32 xl:px-[17.5%]">
         <h1 class="text-4xl">Infos</h1>
-        <ul>
+        <ul class="m-4">
             <li>- Thumbnails werden alle 5 Minuten geupdated</li>
             <li>- Streams kommen direkt aus TUWEL</li>
         </ul>
+
+        <br>
+
+        <h2 class="text-3xl my-2">OBS Scene Collection</h2>
+        <p>
+            Die OBS Scene Collection kann für das Aufzeichnen von Streams in OBS verwendet werden.
+        </p>
+        <a download href="/tu-streams-OBS.json" class="block my-4 text-primary font-semibold transition-all hover:translate-x-1">Download -&gt;</a>
+
+
+        <h3 class="text-xl my-2">OBS Anleitung</h3>
+        <p>1. Scene Collection Herunterladen</p>
+        <p>2. In OBS: klicke auf Scene Collection -&gt; Import</p>
+        <img srcset={step1.src} class="p-4 w-[40rem]" alt="In OBS: klicke auf Scene Collection -> Import">
+        <p>3. Ziehe die heruntergeladene Scene Collection (.json Datei) per Drag and Drop in das Fenster, und klicke "Import"</p>
+        <img srcset={step2.src} class="p-4 w-[40rem]" alt="Ziehe die heruntergeladene Scene Collection (.json Datei) per Drag and Drop in das Fenster, und klicke 'Import'">
+        <p>4. Fertig! Du kannst die Scene Collection nun im Dropdown Menü auswählen!</p>
     </main>
 </Layout>
