@@ -34,19 +34,17 @@ for (let streamname of Object.keys(streams)) {
     scenes.sources.push({
         "enabled": true,
         "hotkeys": {},
-        "id": "vlc_source",
+        "id": "ffmpeg_source",
         "muted": false,
         "name": `${streamname} Source`,
         "settings": {
-            "playlist": [
-                {
-                    "hidden": false,
-                    "selected": false,
-                    "value": getStreamUrl(streamID)
-                }
-            ]
+            "buffering_mb": 8,
+            "input": getStreamUrl(streamID),
+            "is_local_file": false,
+            "reconnect_delay_sec": 3,
+            "seekable": false
         },
-        "versioned_id": "vlc_source",
+        "versioned_id": "ffmpeg_source",
         "volume": 1.0
     });
 
@@ -61,6 +59,13 @@ for (let streamname of Object.keys(streams)) {
             "items": [
                 {
                     "id": 1,
+                    "align": 5,
+                    "bounds": {
+                        "x": 1920.0,
+                        "y": 1080.0
+                    },
+                    "bounds_align": 0,
+                    "bounds_type": 2,
                     "locked": false,
                     "name": `${streamname} Source`,
                     "visible": true
